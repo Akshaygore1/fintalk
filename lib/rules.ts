@@ -1,0 +1,218 @@
+export const rules = [
+  // Income — Salary / General Income
+  {
+    keywords: [
+      "SALARY",
+      "CREDIT",
+      "INCOME",
+      "RECEIVED",
+      "PAYMENT TO YOUR ACCOUNT",
+    ],
+    type: "INCOME.Salary",
+  },
+
+  // Income — Refund/Reimbursement
+  {
+    keywords: ["REFUND", "CREDIT NOTE", "REIMBURSEMENT"],
+    type: "INCOME.Refund",
+  },
+
+  // Expense — Bills / Utilities / Rent / Services
+  {
+    keywords: [
+      "RENT",
+      "ELECTRICITY",
+      "WATER",
+      "BILL",
+      "INTERNET",
+      "PHONE",
+      "GAS",
+      "UTILITY",
+    ],
+    type: "EXPENSE.Bills_Utilities",
+  },
+
+  // Expense — Grocery / Staples / Essentials
+  {
+    keywords: [
+      "GROCERY",
+      "ZEPTO",
+      "BLINKIT",
+      "BIG BASKET",
+      "SUPERMARKET",
+      "DMART",
+      "KIRANA",
+      "VEGETABLE",
+      "FRUIT",
+      "BAKERY",
+      "CAKE",
+      "BREAD",
+      "MILK",
+      "DAIRY",
+      "EGG",
+      "MEAT",
+      "CHICKEN",
+      "MUTTON",
+      "PROVISION STORE",
+      "FOOD MART",
+    ],
+    type: "EXPENSE.Groceries",
+  },
+
+  // Expense — Dining / Eating Out / Food Delivery
+  {
+    keywords: [
+      "RESTAURANT",
+      "CAFE",
+      "DINING",
+      "EATERY",
+      "FOOD COURT",
+      "TAKEAWAY",
+      "UBER EATS",
+      "SWIGGY",
+      "ZOMATO",
+      "DOMINOS",
+      "PIZZA HUT",
+      "MCDONALD",
+      "KFC",
+      "BURGER KING",
+      "STARBUCKS",
+      "CCD",
+      "COFFEE DAY",
+      "CHAI POINT",
+      "BREAKFAST",
+      "LUNCH",
+      "DINNER",
+      "MEAL",
+    ],
+    type: "EXPENSE.Dining_EatingOut",
+  },
+
+  // Expense — Shopping (Fashion + E-Commerce + Electronics + General)
+  {
+    keywords: [
+      "SHOPPING",
+      "MALL",
+      "STORE",
+      "MART",
+      "AMAZON",
+      "FLIPKART",
+      "MYNTRA",
+      "AJIO",
+      "TATA CLIQ",
+      "MEESHO",
+      "NYKAA",
+      "CLOTHING",
+      "DRESS",
+      "FASHION",
+      "APPAREL",
+      "T-SHIRT",
+      "PANT",
+      "JEANS",
+      "SHIRT",
+      "KURTA",
+      "ACCESSORIES",
+      "WATCH",
+      "JEWELLERY",
+      "BAG",
+      "BACKPACK",
+      "SHOE",
+      "SLIPPER",
+      "FOOTWEAR",
+      "ELECTRONICS",
+      "MOBILE",
+      "GADGET",
+      "HEADPHONE",
+      "EARBUD",
+      "AIRPOD",
+      "FURNITURE",
+      "HOME DECOR",
+      "DECOR",
+      "HOUSEHOLD",
+    ],
+    type: "EXPENSE.Shopping",
+  },
+
+  // Expense — Personal Care / Beauty / Grooming / Pharmacy
+  {
+    keywords: [
+      "PERSONAL CARE",
+      "GROOMING",
+      "BEAUTY",
+      "SKINCARE",
+      "COSMETIC",
+      "HAIRCARE",
+      "FACE WASH",
+      "CREAM",
+      "LOTION",
+      "PERFUME",
+      "DEODORANT",
+      "SHAMPOO",
+      "CONDITIONER",
+      "SERUM",
+      "MAKEUP",
+      "NYKAA",
+      "PURPLLE",
+      "MAMA EARTH",
+      "BEARDO",
+      "WOW",
+      "DOVE",
+      "NIVEA",
+      "PHARMACY",
+      "MEDICAL STORE",
+      "MEDICINE",
+      "APOLLO",
+      "PHARMEASY",
+      "1MG",
+      "CHEMIST",
+    ],
+    type: "EXPENSE.Personal_Care",
+  },
+
+  // Expense — Transport / Travel
+  {
+    keywords: [
+      "TRAVEL",
+      "TAXI",
+      "CAB",
+      "RAIL",
+      "BUS",
+      "FLIGHT",
+      "METRO",
+      "UBER",
+      "OLA",
+    ],
+    type: "EXPENSE.Transport_Travel",
+  },
+
+  // Expense — Digital / Subscriptions / Entertainment
+  {
+    keywords: [
+      "SUBSCRIPTION",
+      "NETFLIX",
+      "SPOTIFY",
+      "STREAMING",
+      "DIGITAL",
+      "SERVICE",
+      "APP",
+      "APPLE",
+      "YOUTUBE PREMIUM",
+      "HOTSTAR",
+      "PRIME VIDEO",
+      "DISNEY",
+    ],
+    type: "EXPENSE.Digital_Services",
+  },
+
+  // Expense — Fees / Charges / EMI / Loan
+  {
+    keywords: ["FEE", "CHARGE", "EMI", "LOAN", "INSTALLMENT", "INTEREST"],
+    type: "EXPENSE.Fees_Charges",
+  },
+
+  // Income or Expense — Transfer between accounts
+  {
+    keywords: ["TRANSFER BETWEEN", "INTERNAL TRANSFER", "OWN ACCOUNT"],
+    type: "TRANSFER",
+  },
+];
