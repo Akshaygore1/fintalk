@@ -14,9 +14,11 @@ export default function Home() {
   } | null>(null);
   const [headers, setHeaders] = useState<string[] | null>(null);
   const [types, setTypes] = useState<string[] | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const upload = async () => {
     if (!file) return;
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
     if (
@@ -37,6 +39,7 @@ export default function Home() {
     setData(data.response);
     setHeaders(data.headers);
     setTypes(data.types);
+    setLoading(false);
     toast.success("File has been uploaded successfully");
   };
 
@@ -50,7 +53,7 @@ export default function Home() {
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
         />
         <button type="button" onClick={upload}>
-          Upload
+          {loading ? "Uploading..." : "Upload"}
         </button>
       </div>
       <div className="flex flex-col gap-2">

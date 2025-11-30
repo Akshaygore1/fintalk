@@ -1,5 +1,3 @@
-import { prisma } from "@/lib/prisma";
-import { rules } from "@/lib/rules";
 import { mistral } from "@ai-sdk/mistral";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -28,45 +26,20 @@ export async function createTableSQL(
   headers: string[],
   types: string[]
 ) {
-  const allHeaders = [...headers, "transaction_type"];
-  const allTypes = [...types, "TEXT"];
-
-  const columns = allHeaders
+  const columns = headers
     .map((header, index) => {
-      const type = allTypes[index] || "TEXT";
-      return `"${header}" ${type.toUpperCase()}`;
+      const columnName = `"${header}"`;
+      const columnType = types[index];
+      return `${columnName} ${columnType}`;
     })
-    .join(",\n  ");
+    .join(", ");
 
-  const query = `CREATE TABLE IF NOT EXISTS "${tableName}" (\n  ${columns}\n);`;
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS ${tableName} (
+      ${columns},
+      "transaction_type" VARCHAR(50)
+    );
+  `;
 
-  await prisma.$executeRawUnsafe(query);
-
-  return query;
-}
-
-// Classification function example
-function classifyTransaction(
-  description: string,
-  amount: number | null
-): string {
-  const desc = description.toUpperCase();
-
-  for (const rule of rules) {
-    for (const kw of rule.keywords) {
-      if (desc.includes(kw)) {
-        return rule.type;
-      }
-    }
-  }
-
-  if (amount != null) {
-    if (amount > 0) {
-      return "INCOME.Unknown";
-    } else if (amount < 0) {
-      return "EXPENSE.Unknown";
-    }
-  }
-
-  return "UNCLASSIFIED";
+  return createTableQuery;
 }

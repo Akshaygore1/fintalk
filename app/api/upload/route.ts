@@ -18,39 +18,37 @@ export async function POST(req: Request) {
   }
 
   const fileContent = await file.text();
-  const lines = fileContent.split("\n").filter((line) => line.trim() !== ""); // Remove empty lines
+  const lines = fileContent.split("\n").filter((line) => line.trim() !== "");
 
-  // Get the first 5 rows (assuming each line is a row)
-  const first5Rows = lines.slice(0, 5);
-  const { headers, types } = await getHeadersandTypes(first5Rows);
-
-  // create table
+  const first3Rows = lines.slice(0, 3);
+  console.time("Header and Type Extraction");
+  const { headers, types } = await getHeadersandTypes(first3Rows);
+  console.timeEnd("Header and Type Extraction");
+  console.log("Extracted Headers:", headers);
+  console.log("Extracted Types:", types);
   const createTableQuery = await createTableSQL(
     "your_table_name",
     headers,
     types
   );
-  console.log("Create Table Query:", createTableQuery);
 
-  // Insert data into the table
-  const dataRows = lines.slice(1); // Skip the header row
-  console.log("Data Rows:", dataRows.length);
-  // Filter out empty rows and process data
+  // Execute the create table query
+  try {
+    await prisma.$executeRawUnsafe(createTableQuery);
+  } catch (error) {
+    console.error("Failed to create table:", error);
+  }
+
+  const dataRows = lines.slice(1);
   const validRows = dataRows.filter((row) => row.trim() !== "");
-
+  console.time("Total classification time");
   for (const row of validRows) {
     const values = row.split(",").map((value) => value.trim());
-
-    // Ensure we have the right number of values
     if (values.length !== headers.length) {
       console.warn(`Skipping row with incorrect number of values: ${row}`);
       continue;
     }
-
-    // Format values based on their types
     const formattedValues = formatAndClassifyValues(values, types);
-
-    // Insert each row individually to better handle errors
     const columns = [...headers, "transaction_type"]
       .map((h) => `"${h}"`)
       .join(", ");
@@ -58,14 +56,14 @@ export async function POST(req: Request) {
       INSERT INTO your_table_name (${columns})
       VALUES (${formattedValues.join(", ")});
     `;
-    console.log("Insert Query:", insertQuery);
     try {
       await prisma.$executeRawUnsafe(insertQuery);
     } catch (error) {
       console.error(`Failed to insert row: ${row}`, error);
-      // Continue with next row instead of failing completely
     }
   }
+
+  console.timeEnd("Total classification time");
 
   return NextResponse.json({ response, headers, types }, { status: 200 });
 }
